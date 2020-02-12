@@ -15,10 +15,11 @@
 &emsp;&emsp;Cluster configuration is fairly complex, the default configuration will work for most people out of the box.
 
 #### open tomcat cluster switch
-   1. simple template <br>
+1. enable clustering <br>
    `<Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster"/>`
    <details>
    <summary><b>Expand</b>: detail default configuration:</summary>
+
    ```
    <Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster"
                  channelSendOptions="8">
@@ -62,10 +63,18 @@
    ```
    </details>
 
-   2. place
-      - `<Engine>`
-      
-      - `<Host>`
+2. places
+   - `<Engine>`<br>
+   support clustering in all virtual hosts of Tomcat.
+   > **Note:** Engine could have mult hosts, e.g.:
+   ```
+   <Engine name="Catalina" defaultHost="ren">
+      <Host name="ren"    appBase="renapps"/>
+      <Host name="stimpy" appBase="stimpyapps"/>
+   </Engine>
+   ```
+   - `<Host>`<br>
+   only current virtual host.
 
 #### what's tomcat cluster work flow
 
@@ -73,14 +82,9 @@
 #### distributed system key part —— session manangement
 
 
-
 #### demo
-
-
-
    - ##### windows (single)
 
-
-
-
    - ##### linux (cluster + nginx)
+
+#### summary
