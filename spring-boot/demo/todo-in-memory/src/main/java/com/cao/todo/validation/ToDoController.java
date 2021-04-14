@@ -60,18 +60,21 @@ public class ToDoController {
 			return ResponseEntity.badRequest().body(ToDoValidationErrorBuilder.fromBindingErrors(errors));
 		}
 		ToDo result = repository.save(toDo);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(result.getId()).toUri();
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+			.path("/{id}")
+			.buildAndExpand(result.getId())
+			.toUri();
 		return ResponseEntity.created(location).build();
 	}
 
 	@DeleteMapping("/todo/{id}")
-	public ResponseEntity<ToDo> deleteToDo(@PathVariable String id){
+	public ResponseEntity<ToDo> deleteToDo(@PathVariable String id) {
 		repository.delete(ToDoBuilder.create().withId(id).build());
 		return ResponseEntity.noContent().build();
 	}
 
 	@DeleteMapping("/todo")
-	public ResponseEntity<ToDo> deleteToDo(@RequestBody ToDo toDo){
+	public ResponseEntity<ToDo> deleteToDo(@RequestBody ToDo toDo) {
 		repository.delete(toDo);
 		return ResponseEntity.noContent().build();
 	}

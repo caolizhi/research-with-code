@@ -35,7 +35,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<Customer> getCustomersByLastName(String lastName) {
 		Criteria criteria = Criteria.where("lastName").is(lastName);
 		Query query = new Query(criteria);
-		return mongoTemplate.find(query,Customer.class);
+		return mongoTemplate.find(query, Customer.class);
 	}
 
 	@Override

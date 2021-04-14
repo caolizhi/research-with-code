@@ -1,4 +1,4 @@
-package com.alex.demo.ctx.child;
+package com.example.demo.twotomcats.child;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  */
 @SpringBootConfiguration
 @EnableWebMvc
-@ComponentScan("com.alex.demo.ctx.child")
+@ComponentScan("com.example.demo.twotomcats.child")
 @Import({ PropertyPlaceholderAutoConfiguration.class, ServletWebServerFactoryAutoConfiguration.class, DispatcherServletAutoConfiguration.class })
 @PropertySource("classpath:context-child.properties")
 public class ChildCtxConfig {

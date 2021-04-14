@@ -44,50 +44,53 @@ public class ToDoJpaController {
 	}
 
 	@GetMapping("/todo")
-	public ResponseEntity<Iterable<ToDoJpa>> getToDos(){
+	public ResponseEntity<Iterable<ToDoJpa>> getToDos() {
 		return ResponseEntity.ok(toDoRepositoryJpa.findAll());
 	}
 
 	@GetMapping("/todo/{id}")
-	public ResponseEntity<ToDoJpa> getToDoById(@PathVariable String id){
+	public ResponseEntity<ToDoJpa> getToDoById(@PathVariable String id) {
 		Optional<ToDoJpa> toDo = toDoRepositoryJpa.findById(id);
-		if(toDo.isPresent()) {
+		if (toDo.isPresent()) {
 			return ResponseEntity.ok(toDo.get());
 		}
 		return ResponseEntity.notFound().build();
 	}
 
 	@PatchMapping("/todo/{id}")
-	public ResponseEntity<ToDo> setCompleted(@PathVariable String id){
+	public ResponseEntity<ToDo> setCompleted(@PathVariable String id) {
 		Optional<ToDoJpa> toDo = toDoRepositoryJpa.findById(id);
-		if(!toDo.isPresent())
+		if (!toDo.isPresent())
 			return ResponseEntity.notFound().build();
 		ToDoJpa result = toDo.get();
 		result.setCompleted(true);
 		toDoRepositoryJpa.save(result);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(result.getId()).toUri();
-		return ResponseEntity.ok().header("Location",location.toString()).build();
+		return ResponseEntity.ok().header("Location", location.toString()).build();
 	}
 
-	@RequestMapping(value="/todo", method = {RequestMethod.POST,RequestMethod.PUT})
-	public ResponseEntity<?> createToDo(@Valid @RequestBody ToDo toDo, Errors errors){
+	@RequestMapping(value = "/todo", method = {RequestMethod.POST, RequestMethod.PUT})
+	public ResponseEntity<?> createToDo(@Valid @RequestBody ToDo toDo, Errors errors) {
 		ToDoJpa toDoJpa = objectMapper.convertValue(toDo, ToDoJpa.class);
 		if (errors.hasErrors()) {
 			return ResponseEntity.badRequest().body(ToDoValidationErrorBuilder.fromBindingErrors(errors));
 		}
 		ToDoJpa result = toDoRepositoryJpa.save(toDoJpa);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(result.getId()).toUri();
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+			.path("/{id}")
+			.buildAndExpand(result.getId())
+			.toUri();
 		return ResponseEntity.created(location).build();
 	}
 
 	@DeleteMapping("/todo/{id}")
-	public ResponseEntity<ToDo> deleteToDo(@PathVariable String id){
+	public ResponseEntity<ToDo> deleteToDo(@PathVariable String id) {
 		toDoRepositoryJpa.delete(ToDoJpaBuilder.create().withId(id).build());
 		return ResponseEntity.noContent().build();
 	}
 
 	@DeleteMapping("/todo")
-	public ResponseEntity<ToDo> deleteToDo(@RequestBody ToDoJpa toDo){
+	public ResponseEntity<ToDo> deleteToDo(@RequestBody ToDoJpa toDo) {
 		toDoRepositoryJpa.delete(toDo);
 		return ResponseEntity.noContent().build();
 	}

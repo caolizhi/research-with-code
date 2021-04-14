@@ -7,7 +7,8 @@ public class ToDoJpaBuilder {
 	private String id = null;
 	private String description = "";
 
-	private ToDoJpaBuilder() {}
+	private ToDoJpaBuilder() {
+	}
 
 	public static ToDoJpaBuilder create() {
 		return instance;
@@ -18,7 +19,7 @@ public class ToDoJpaBuilder {
 		return instance;
 	}
 
-	public ToDoJpaBuilder withId(String id){
+	public ToDoJpaBuilder withId(String id) {
 		this.id = id;
 		return instance;
 	}

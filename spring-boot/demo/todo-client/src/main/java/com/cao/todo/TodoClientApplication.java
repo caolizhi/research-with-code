@@ -29,7 +29,7 @@ public class TodoClientApplication {
 			log.info("=================== findAll:=======================");
 			Iterable<ToDo> toDos = client.findAll();
 			assert toDos != null;
-			toDos.forEach( toDo -> log.info(toDo.toString()));
+			toDos.forEach(toDo -> log.info(toDo.toString()));
 
 			log.info("=================== createToDo:=======================");
 			ToDo newToDo = client.upsert(new ToDo("Drink plenty of Water daily!"));
@@ -51,6 +51,5 @@ public class TodoClientApplication {
 			assert client.findById(newToDo.getId()) == null;
 		};
 	}
-
 
 }

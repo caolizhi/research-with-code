@@ -49,23 +49,23 @@ public class ToDoRepositoryJdbc implements CommonRepository<ToDo> {
 	@Override
 	public ToDo save(ToDo domain) {
 		ToDo result = findById(domain.getId());
-		if(result != null){
+		if (result != null) {
 			result.setDescription(domain.getDescription());
 			result.setCompleted(domain.isCompleted());
 			result.setModified(LocalDateTime.now());
 			return insert(result, SQL_UPDATE);
 		}
-		return insert(domain,SQL_INSERT);
+		return insert(domain, SQL_INSERT);
 	}
 
-	private ToDo insert(final ToDo toDo, final String sql){
+	private ToDo insert(final ToDo toDo, final String sql) {
 		Map<String, Object> namedParameters = new HashMap<>();
-		namedParameters.put("id",toDo.getId());
-		namedParameters.put("description",toDo.getDescription());
-		namedParameters.put("created",java.sql.Timestamp.valueOf(toDo.getCreated()));
-		namedParameters.put("modified",java.sql.Timestamp.valueOf(toDo.getModified()));
-		namedParameters.put("completed",toDo.isCompleted());
-		this.jdbcTemplate.update(sql,namedParameters);
+		namedParameters.put("id", toDo.getId());
+		namedParameters.put("description", toDo.getDescription());
+		namedParameters.put("created", java.sql.Timestamp.valueOf(toDo.getCreated()));
+		namedParameters.put("modified", java.sql.Timestamp.valueOf(toDo.getModified()));
+		namedParameters.put("completed", toDo.isCompleted());
+		this.jdbcTemplate.update(sql, namedParameters);
 		return findById(toDo.getId());
 	}
 

@@ -23,8 +23,8 @@ public class ToDoJpa {
 
 	@NotNull
 	@Id
-		@GeneratedValue(generator = "system-uuid")
-		@GenericGenerator(name = "system-uuid", strategy = "uuid")
+	@GeneratedValue(generator = "system-uuid")
+	@GenericGenerator(name = "system-uuid", strategy = "uuid")
 	private String id;
 	@NotNull
 	@NotBlank
@@ -40,7 +40,7 @@ public class ToDoJpa {
 	}
 
 	@PrePersist
-	void onCreate(){
+	void onCreate() {
 		this.setCreated(LocalDateTime.now());
 		this.setModified(LocalDateTime.now());
 	}

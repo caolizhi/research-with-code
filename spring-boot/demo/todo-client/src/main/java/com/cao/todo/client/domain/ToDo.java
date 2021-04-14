@@ -14,14 +14,14 @@ public class ToDo {
 	private LocalDateTime modified;
 	private boolean completed;
 
-	public ToDo(){
+	public ToDo() {
 		LocalDateTime date = LocalDateTime.now();
 		this.id = UUID.randomUUID().toString();
 		this.created = date;
 		this.modified = date;
 	}
 
-	public ToDo(String description){
+	public ToDo(String description) {
 		this();
 		this.description = description;
 	}

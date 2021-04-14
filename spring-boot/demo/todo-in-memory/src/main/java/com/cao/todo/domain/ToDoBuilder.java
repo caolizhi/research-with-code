@@ -7,7 +7,8 @@ public class ToDoBuilder {
 	private String id = null;
 	private String description = "";
 
-	private ToDoBuilder() {}
+	private ToDoBuilder() {
+	}
 
 	public static ToDoBuilder create() {
 		return instance;
@@ -18,7 +19,7 @@ public class ToDoBuilder {
 		return instance;
 	}
 
-	public ToDoBuilder withId(String id){
+	public ToDoBuilder withId(String id) {
 		this.id = id;
 		return instance;
 	}

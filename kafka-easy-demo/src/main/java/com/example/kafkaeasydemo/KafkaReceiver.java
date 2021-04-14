@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 public class KafkaReceiver {
 
 	@KafkaListener(topics = {"caolizhi"})
-	public void listen(ConsumerRecord<?,?> record) {
+	public void listen(ConsumerRecord<?, ?> record) {
 		Optional<?> kafkaMessag = Optional.ofNullable(record.value());
 		if (kafkaMessag.isPresent()) {
 			Object message = kafkaMessag.get();

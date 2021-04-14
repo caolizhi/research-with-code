@@ -31,37 +31,43 @@ public class ToDoRestClient {
 	}
 
 	public Iterable<ToDo> findAll() throws URISyntaxException {
-		RequestEntity<Iterable<ToDo>> requestEntity = new RequestEntity<Iterable<ToDo>>(HttpMethod.GET, new URI(properties.getUrl() + properties.getBasePath()));
-		ResponseEntity<Iterable<ToDo>> response = restTemplate.exchange(requestEntity, new ParameterizedTypeReference<Iterable<ToDo>>(){});
-		if(response.getStatusCode() == HttpStatus.OK){
+		RequestEntity<Iterable<ToDo>> requestEntity = new RequestEntity<Iterable<ToDo>>(HttpMethod.GET,
+			new URI(properties.getUrl() + properties.getBasePath()));
+		ResponseEntity<Iterable<ToDo>> response = restTemplate.exchange(requestEntity,
+			new ParameterizedTypeReference<Iterable<ToDo>>() {
+			});
+		if (response.getStatusCode() == HttpStatus.OK) {
 			return response.getBody();
 		}
 		return null;
 	}
 
-	public ToDo findById(String id){
+	public ToDo findById(String id) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", id);
 		return restTemplate.getForObject(properties.getUrl() + properties.getBasePath() + "/{id}", ToDo.class, params);
 	}
 
 	public ToDo upsert(ToDo toDo) throws URISyntaxException {
-		RequestEntity<?> requestEntity = new RequestEntity<>(toDo,HttpMethod.POST, new URI(properties.getUrl() + properties.getBasePath()));
-		ResponseEntity<?> response = restTemplate.exchange(requestEntity, new ParameterizedTypeReference<ToDo>() {});
-		if(response.getStatusCode() == HttpStatus.CREATED){
-			return restTemplate.getForObject(response.getHeaders().getLocation(),ToDo.class);
+		RequestEntity<?> requestEntity = new RequestEntity<>(toDo, HttpMethod.POST,
+			new URI(properties.getUrl() + properties.getBasePath()));
+		ResponseEntity<?> response = restTemplate.exchange(requestEntity, new ParameterizedTypeReference<ToDo>() {
+		});
+		if (response.getStatusCode() == HttpStatus.CREATED) {
+			return restTemplate.getForObject(response.getHeaders().getLocation(), ToDo.class);
 		}
 		return null;
 	}
 
-	public ToDo setCompleted(String id) throws URISyntaxException{
+	public ToDo setCompleted(String id) throws URISyntaxException {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", id);
-		restTemplate.patchForObject(properties.getUrl() + properties.getBasePath() + "/{id}",null, ResponseEntity.class, params);
+		restTemplate.patchForObject(properties.getUrl() + properties.getBasePath() + "/{id}", null,
+			ResponseEntity.class, params);
 		return findById(id);
 	}
 
-	public void delete(String id){
+	public void delete(String id) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", id);
 		restTemplate.delete(properties.getUrl() + properties.getBasePath() + "/{id}", params);
